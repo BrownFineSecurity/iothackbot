@@ -45,14 +45,42 @@ IoTHackBot is a collection of specialized tools and Claude Code skills designed 
 
 ### Prerequisites
 
+#### Python Dependencies
+
+**Option 1: Using uv (recommended)**
 ```bash
-# Python dependencies
+# Install uv if you haven't already
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install dependencies in a virtual environment
+uv sync
+```
+
+**Option 2: Using pip**
+```bash
+# Create and activate a virtual environment (recommended)
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Install dependencies
 pip install colorama pyserial pexpect requests
+```
 
-# System dependencies (Arch Linux)
-sudo pacman -S nmap e2fsprogs f2fs-tools python python-pip inetutils
+#### System Dependencies
 
-# For other distributions, install equivalent packages
+**Arch Linux:**
+```bash
+sudo pacman -S nmap e2fsprogs f2fs-tools python inetutils
+```
+
+**Ubuntu/Debian:**
+```bash
+sudo apt install nmap e2fsprogs f2fs-tools python3 inetutils-telnet
+```
+
+**macOS:**
+```bash
+brew install nmap e2fsprogs f2fs-tools
 ```
 
 ### Setup
@@ -63,23 +91,45 @@ git clone https://github.com/BrownFineSecurity/iothackbot.git
 cd iothackbot
 ```
 
-2. Add the bin directory to your PATH:
+2. Install Python dependencies (see above)
+
+3. **Using uv (recommended)**: The tools are automatically available via entry points after `uv sync`:
+```bash
+# Tools are available via uv run
+uv run wsdiscovery 192.168.1.0/24
+uv run ffind firmware.bin
+uv run onvifscan auth http://192.168.1.100
+uv run iotnet capture.pcap
+
+# Or activate the venv to use them directly
+source .venv/bin/activate
+wsdiscovery 192.168.1.0/24
+ffind firmware.bin
+```
+
+4. **Using bin/ directory**: Alternatively, add the bin directory to your PATH:
 ```bash
 export PATH="$PATH:$(pwd)/bin"
 ```
 
-3. For permanent setup, add to your shell configuration:
+For permanent setup, add to your shell configuration:
 ```bash
 echo 'export PATH="$PATH:/path/to/iothackbot/bin"' >> ~/.bashrc
 ```
 
 ## Usage
 
+**Note:** All examples below assume you've either:
+- Activated the uv virtual environment (`source .venv/bin/activate`), OR
+- Are using `uv run` prefix (e.g., `uv run wsdiscovery 192.168.1.0/24`), OR
+- Added `bin/` to your PATH
+
 ### Quick Start Examples
 
 #### Discover ONVIF Devices
 ```bash
 wsdiscovery 192.168.1.0/24
+# Or: uv run wsdiscovery 192.168.1.0/24
 ```
 
 #### Test ONVIF Device Security
