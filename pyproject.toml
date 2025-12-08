@@ -3,7 +3,7 @@ name = "iothackbot"
 version = "0.1.0"
 description = "Open-source IoT security testing toolkit with integrated Claude Code skills for automated vulnerability discovery"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.11"
 dependencies = [
     "colorama>=0.4.6",
     "pexpect>=4.9.0",
