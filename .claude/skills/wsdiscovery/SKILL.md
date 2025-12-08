@@ -21,10 +21,12 @@ When the user asks to discover ONVIF devices, find network cameras, or scan for 
    - Decide on output format
 
 2. **Execute the scan**:
-   - Use the wsdiscovery command from the iothackbot bin directory
-   - Basic usage: `wsdiscovery <hostname_or_ip>`
-   - For verbose output: `wsdiscovery <hostname_or_ip> -v`
-   - For JSON output: `wsdiscovery <hostname_or_ip> --format json`
+   - Use the wsdiscovery command via uv run entry point
+   - Basic usage: `uv run wsdiscovery <hostname_or_ip>`
+   - For verbose output: `uv run wsdiscovery <hostname_or_ip> -v`
+   - For JSON output: `uv run wsdiscovery <hostname_or_ip> --format json`
+
+   **Note**: If the venv is activated or if bin/ is in PATH, you can use `wsdiscovery` directly without `uv run`
 
 3. **Output formats**:
    - `--format text` (default): Human-readable colored output with device details
@@ -50,23 +52,25 @@ The tool extracts and displays:
 
 Discover devices on a specific host:
 ```bash
-wsdiscovery 192.168.1.100
+uv run wsdiscovery 192.168.1.100
 ```
 
 Discover with full XML responses:
 ```bash
-wsdiscovery 192.168.1.100 -v
+uv run wsdiscovery 192.168.1.100 -v
 ```
 
 Output device information as JSON:
 ```bash
-wsdiscovery 192.168.1.100 --format json
+uv run wsdiscovery 192.168.1.100 --format json
 ```
 
 Scan network broadcast address to find all devices:
 ```bash
-wsdiscovery 239.255.255.250
+uv run wsdiscovery 239.255.255.250
 ```
+
+**Note**: You can also use `wsdiscovery` directly (without `uv run`) if the venv is activated or bin/ is in your PATH.
 
 ## Important Notes
 
