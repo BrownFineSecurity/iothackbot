@@ -27,15 +27,17 @@ When the user asks to scan ONVIF devices, test IP cameras, or assess IoT device 
    - Check if they have custom wordlists
 
 3. **Execute the scan**:
-   - Use the onvifscan command from the iothackbot bin directory
-   - Format: `onvifscan <subcommand> <url> [options]`
+   - Use the onvifscan command via uv run entry point
+   - Format: `uv run onvifscan <subcommand> <url> [options]`
+
+   **Note**: If the venv is activated or if bin/ is in PATH, you can use `onvifscan` directly without `uv run`
 
 ## Subcommands
 
 ### Auth Scan
 Tests ONVIF endpoints for authentication requirements:
 ```bash
-onvifscan auth http://192.168.1.100
+uv run onvifscan auth http://192.168.1.100
 ```
 
 Options:
@@ -46,7 +48,7 @@ Options:
 ### Brute Force
 Attempts credential brute-forcing on protected endpoints:
 ```bash
-onvifscan brute http://192.168.1.100
+uv run onvifscan brute http://192.168.1.100
 ```
 
 Options:
@@ -58,18 +60,20 @@ Options:
 
 Quick auth check on a device:
 ```bash
-onvifscan auth 192.168.1.100
+uv run onvifscan auth 192.168.1.100
 ```
 
 Auth check with verbose output:
 ```bash
-onvifscan auth http://192.168.1.100:8080 -v
+uv run onvifscan auth http://192.168.1.100:8080 -v
 ```
 
 Brute force with custom wordlists:
 ```bash
-onvifscan brute 192.168.1.100 --usernames custom-users.txt --passwords custom-pass.txt
+uv run onvifscan brute 192.168.1.100 --usernames custom-users.txt --passwords custom-pass.txt
 ```
+
+**Note**: You can also use `onvifscan` directly (without `uv run`) if the venv is activated or bin/ is in your PATH.
 
 ## Important Notes
 

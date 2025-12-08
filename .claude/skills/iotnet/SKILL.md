@@ -32,20 +32,22 @@ When the user asks to analyze network traffic, capture IoT traffic, or assess ne
    - Check if custom detection rules are needed
 
 3. **Execute the analysis**:
-   - Use the iotnet command from the iothackbot bin directory
+   - Use the iotnet command via uv run entry point
+
+   **Note**: If the venv is activated or if bin/ is in PATH, you can use `iotnet` directly without `uv run`
 
 ## Usage Modes
 
 ### PCAP Analysis (Offline)
 Analyze one or more existing packet capture files:
 ```bash
-iotnet capture1.pcap capture2.pcap
+uv run iotnet capture1.pcap capture2.pcap
 ```
 
 ### Live Capture
 Capture and analyze traffic in real-time:
 ```bash
-sudo iotnet -i eth0 -d 30
+sudo uv run iotnet -i eth0 -d 30
 ```
 
 ## Parameters
@@ -74,33 +76,35 @@ sudo iotnet -i eth0 -d 30
 
 Analyze a packet capture file:
 ```bash
-iotnet /path/to/capture.pcap
+uv run iotnet /path/to/capture.pcap
 ```
 
 Live capture for 60 seconds on wifi interface:
 ```bash
-sudo iotnet -i wlan0 -d 60
+sudo uv run iotnet -i wlan0 -d 60
 ```
 
 Analyze traffic for specific IP:
 ```bash
-iotnet capture.pcap --ip 192.168.1.100
+uv run iotnet capture.pcap --ip 192.168.1.100
 ```
 
 Live capture with BPF filter:
 ```bash
-sudo iotnet -i eth0 -c "port 1883 or port 5683" -d 45
+sudo uv run iotnet -i eth0 -c "port 1883 or port 5683" -d 45
 ```
 
 Multiple PCAPs with custom config:
 ```bash
-iotnet file1.pcap file2.pcap --config custom-rules.json
+uv run iotnet file1.pcap file2.pcap --config custom-rules.json
 ```
 
 Filter by display filter (Wireshark syntax):
 ```bash
-iotnet capture.pcap --display-filter "mqtt or coap"
+uv run iotnet capture.pcap --display-filter "mqtt or coap"
 ```
+
+**Note**: You can also use `iotnet` directly (without `uv run`) if the venv is activated or bin/ is in your PATH.
 
 ## Detected IoT Protocols
 

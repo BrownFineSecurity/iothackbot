@@ -21,12 +21,14 @@ When the user asks to analyze files, find specific file types, or extract filesy
    - Ask if they want all file types or just artifact types
 
 2. **Execute the analysis**:
-   - Use the ffind command from the iothackbot bin directory
-   - Basic usage: `ffind <path> [<path2> ...]`
-   - To extract filesystems: `ffind <path> -e`
-   - Custom extraction directory: `ffind <path> -e -d /path/to/output`
-   - Show all file types: `ffind <path> -a`
-   - Verbose output: `ffind <path> -v`
+   - Use the ffind command via uv run entry point
+   - Basic usage: `uv run ffind <path> [<path2> ...]`
+   - To extract filesystems: `uv run ffind <path> -e`
+   - Custom extraction directory: `uv run ffind <path> -e -d /path/to/output`
+   - Show all file types: `uv run ffind <path> -a`
+   - Verbose output: `uv run ffind <path> -v`
+
+   **Note**: If the venv is activated or if bin/ is in PATH, you can use `ffind` directly without `uv run`
 
 3. **Output formats**:
    - `--format text` (default): Human-readable colored output with type summaries
@@ -43,23 +45,25 @@ When the user asks to analyze files, find specific file types, or extract filesy
 
 Analyze a firmware file to see file types:
 ```bash
-ffind /path/to/firmware.bin
+uv run ffind /path/to/firmware.bin
 ```
 
 Extract all filesystems from a firmware image:
 ```bash
-sudo ffind /path/to/firmware.bin -e
+sudo uv run ffind /path/to/firmware.bin -e
 ```
 
 Analyze multiple files and show all types:
 ```bash
-ffind /path/to/file1.bin /path/to/file2.bin -a
+uv run ffind /path/to/file1.bin /path/to/file2.bin -a
 ```
 
 Extract to a custom directory:
 ```bash
-sudo ffind /path/to/firmware.bin -e -d /tmp/my-extraction
+sudo uv run ffind /path/to/firmware.bin -e -d /tmp/my-extraction
 ```
+
+**Note**: You can also use `ffind` directly (without `uv run`) if the venv is activated or bin/ is in your PATH.
 
 ## Important Notes
 
