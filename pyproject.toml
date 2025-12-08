@@ -1,0 +1,30 @@
+[project]
+name = "iothackbot"
+version = "0.1.0"
+description = "Open-source IoT security testing toolkit with integrated Claude Code skills for automated vulnerability discovery"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "colorama>=0.4.6",
+    "pexpect>=4.9.0",
+    "pyserial>=3.5",
+    "requests>=2.32.5",
+]
+
+[project.urls]
+Homepage = "https://github.com/BrownFineSecurity/iothackbot"
+Repository = "https://github.com/BrownFineSecurity/iothackbot"
+Issues = "https://github.com/BrownFineSecurity/iothackbot/issues"
+
+[project.scripts]
+ffind = "iothackbot.ffind:ffind"
+iotnet = "iothackbot.iotnet:iotnet"
+onvifscan = "iothackbot.onvifscan:onvifscan"
+wsdiscovery = "iothackbot.wsdiscovery:wsdiscovery"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["tools/iothackbot"]
