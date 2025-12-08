@@ -9,7 +9,10 @@ This skill enables interaction with IoT device shells accessible via telnet for 
 
 ## Prerequisites
 
-- Python 3 with pexpect library (`pip install pexpect` or `sudo pacman -S python-pexpect`)
+- Python 3 with pexpect library:
+  - **Arch Linux:** `sudo pacman -S python-pexpect`
+  - **Using uv (recommended):** Run `uv sync` from the project root to install all dependencies
+  - **Using pip:** `pip install pexpect`
 - telnet client installed on the system (`sudo pacman -S inetutils` on Arch)
 - Network access to the target device's telnet port
 
@@ -42,47 +45,88 @@ The helper script solves many problems with direct telnet usage:
 
 ### Quick Start with Telnet Helper
 
-**Single Command:**
+**Note:** If you installed dependencies with `uv sync`, use `uv run` from the project root:
 ```bash
-python3 .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --command "uname -a"
+# From project root (recommended)
+uv run python .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --command "uname -a"
+```
+
+Alternatively, activate the virtual environment:
+```bash
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+python .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --command "uname -a"
+```
+
+**Single Command (from project root):**
+```bash
+# Using uv (recommended)
+uv run python .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --command "uname -a"
+
+# Or with activated venv: source .venv/bin/activate
+# Or with system Python: python3 .claude/skills/telnetshell/telnet_helper.py ...
 ```
 
 **Custom Port:**
 ```bash
-python3 .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --port 2222 --command "ls /"
+# Using uv (recommended)
+uv run python .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --port 2222 --command "ls /"
+
+# Or with activated venv: source .venv/bin/activate
+# Or with system Python: python3 .claude/skills/telnetshell/telnet_helper.py ...
 ```
 
 **With Custom Prompt (recommended for known devices):**
 ```bash
-python3 .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --prompt "^/ [#\$]" --command "ifconfig"
+# Using uv (recommended)
+uv run python .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --prompt "^/ [#\$]" --command "ifconfig"
+
+# Or with activated venv: source .venv/bin/activate
+# Or with system Python: python3 .claude/skills/telnetshell/telnet_helper.py ...
 ```
 
 **Interactive Mode:**
 ```bash
-python3 .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --port 2222 --interactive
+# Using uv (recommended)
+uv run python .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --port 2222 --interactive
+
+# Or with activated venv: source .venv/bin/activate
+# Or with system Python: python3 .claude/skills/telnetshell/telnet_helper.py ...
 ```
 
 **Batch Commands from File:**
 ```bash
 # Create a file with commands (one per line)
 echo -e "uname -a\ncat /proc/version\nifconfig\nps" > commands.txt
-python3 .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --script commands.txt
+
+# Using uv (recommended)
+uv run python .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --script commands.txt
+
+# Or with activated venv: source .venv/bin/activate
+# Or with system Python: python3 .claude/skills/telnetshell/telnet_helper.py ...
 ```
 
 **JSON Output (for parsing):**
 ```bash
-python3 .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --command "uname -a" --json
+# Using uv (recommended)
+uv run python .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --command "uname -a" --json
+
+# Or with activated venv: source .venv/bin/activate
+# Or with system Python: python3 .claude/skills/telnetshell/telnet_helper.py ...
 ```
 
 **Debug Mode:**
 ```bash
-python3 .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --command "ls" --debug
+# Using uv (recommended)
+uv run python .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --command "ls" --debug
+
+# Or with activated venv: source .venv/bin/activate
+# Or with system Python: python3 .claude/skills/telnetshell/telnet_helper.py ...
 ```
 
 **Session Logging (for observation):**
 ```bash
-# Terminal 1 - Run with logging
-python3 .claude/skills/telnetshell/telnet_helper.py \
+# Terminal 1 - Run with logging (using uv recommended)
+uv run python .claude/skills/telnetshell/telnet_helper.py \
   --host 192.168.1.100 \
   --port 2222 \
   --logfile /tmp/session.log \
@@ -90,6 +134,9 @@ python3 .claude/skills/telnetshell/telnet_helper.py \
 
 # Terminal 2 - Watch the session in real-time
 tail -f /tmp/session.log
+
+# Or with activated venv: source .venv/bin/activate
+# Or with system Python: python3 .claude/skills/telnetshell/telnet_helper.py ...
 ```
 
 **Note:** See `OBSERVING_SESSIONS.md` for comprehensive guide on monitoring telnet sessions.
@@ -138,8 +185,8 @@ The helper script includes common prompt patterns, but you can specify custom on
 Here's a complete example of safely enumerating a device:
 
 ```bash
-# Set variables for convenience
-HELPER="python3 .claude/skills/telnetshell/telnet_helper.py"
+# Set variables for convenience (using uv)
+HELPER="uv run python .claude/skills/telnetshell/telnet_helper.py"
 HOST="192.168.1.100"
 PORT="2222"
 LOGFILE="/tmp/telnet_session.log"
@@ -168,6 +215,9 @@ $HELPER --host $HOST --port $PORT --logfile "$LOGFILE" --command "df -h"
 # Security assessment
 $HELPER --host $HOST --port $PORT --logfile "$LOGFILE" --command "cat /etc/passwd"
 $HELPER --host $HOST --port $PORT --logfile "$LOGFILE" --command "find / -perm -4000 2>/dev/null"
+
+# Note: If using activated venv, set HELPER="python .claude/skills/telnetshell/telnet_helper.py"
+# If using system Python with deps installed, set HELPER="python3 .claude/skills/telnetshell/telnet_helper.py"
 ```
 
 **IMPORTANT FOR CLAUDE CODE**: When using this skill, ALWAYS include `--logfile /tmp/telnet_session.log` in every command so the user can monitor activity with `tail -f /tmp/telnet_session.log`.
@@ -408,15 +458,21 @@ busybox httpd -p 8000
 
 ### Scenario 1: No Authentication Shell
 ```bash
-# Connect - drops directly to root shell
-python3 .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --interactive
+# Connect - drops directly to root shell (using uv)
+uv run python .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --interactive
 # Enumerate and exploit
+
+# Or with activated venv: source .venv/bin/activate
+# Or with system Python: python3 .claude/skills/telnetshell/telnet_helper.py ...
 ```
 
 ### Scenario 2: Custom Port No-Auth Shell
 ```bash
-# Many IoT cameras use port 2222
-python3 .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --port 2222 --interactive
+# Many IoT cameras use port 2222 (using uv)
+uv run python .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --port 2222 --interactive
+
+# Or with activated venv: source .venv/bin/activate
+# Or with system Python: python3 .claude/skills/telnetshell/telnet_helper.py ...
 ```
 
 ### Scenario 3: Password-Protected Shell
@@ -494,40 +550,48 @@ The skill includes pre-built enumeration scripts for common tasks:
 
 **Usage:**
 ```bash
-python3 .claude/skills/telnetshell/telnet_helper.py \
+# Using uv (recommended)
+uv run python .claude/skills/telnetshell/telnet_helper.py \
   --host 192.168.1.100 \
   --port 2222 \
   --script .claude/skills/telnetshell/enum_system.txt
+
+# Or with activated venv: source .venv/bin/activate
+# Or with system Python: python3 .claude/skills/telnetshell/telnet_helper.py ...
 ```
 
 ## Example Usage
 
 ```bash
-# Basic connection to standard telnet port
-python3 .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --command "uname -a"
+# Basic connection to standard telnet port (using uv)
+uv run python .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --command "uname -a"
 
-# Connection to custom port (common for IoT cameras)
-python3 .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --port 2222 --command "ls /"
+# Connection to custom port (common for IoT cameras, using uv)
+uv run python .claude/skills/telnetshell/telnet_helper.py --host 192.168.1.100 --port 2222 --command "ls /"
 
-# Interactive session with logging
-python3 .claude/skills/telnetshell/telnet_helper.py \
+# Interactive session with logging (using uv)
+uv run python .claude/skills/telnetshell/telnet_helper.py \
   --host 192.168.1.100 \
   --port 2222 \
   --logfile /tmp/camera_session.log \
   --interactive
 
-# Batch enumeration
-python3 .claude/skills/telnetshell/telnet_helper.py \
+# Batch enumeration (using uv)
+uv run python .claude/skills/telnetshell/telnet_helper.py \
   --host 192.168.1.100 \
   --port 2222 \
   --script enum_system.txt \
   --json > results.json
 
-# Long-running command with custom timeout
-python3 .claude/skills/telnetshell/telnet_helper.py \
+# Long-running command with custom timeout (using uv)
+uv run python .claude/skills/telnetshell/telnet_helper.py \
   --host 192.168.1.100 \
   --timeout 10 \
   --command "find / -name '*.conf'"
+
+# Note: For all examples above, you can also use:
+# - Activated venv: source .venv/bin/activate && python .claude/skills/telnetshell/telnet_helper.py ...
+# - System Python: python3 .claude/skills/telnetshell/telnet_helper.py ...
 ```
 
 ## References

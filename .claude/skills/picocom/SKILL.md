@@ -10,7 +10,10 @@ This skill enables interaction with IoT device UART consoles using picocom for s
 ## Prerequisites
 
 - picocom must be installed on the system
-- Python 3 with pyserial library (`sudo pacman -S python-pyserial` on Arch, or `pip install pyserial`)
+- Python 3 with pyserial library:
+  - **Arch Linux:** `sudo pacman -S python-pyserial`
+  - **Using uv (recommended):** Run `uv sync` from the project root to install all dependencies
+  - **Using pip:** `pip install pyserial`
 - UART connection to the target device (USB-to-serial adapter, FTDI cable, etc.)
 - Appropriate permissions to access serial devices (typically /dev/ttyUSB* or /dev/ttyACM*)
 
@@ -42,42 +45,75 @@ The helper script solves many problems with direct picocom usage:
 
 ### Quick Start with Serial Helper
 
-**Single Command:**
+**Note:** If you installed dependencies with `uv sync`, use `uv run` from the project root:
 ```bash
-python3 .claude/skills/picocom/serial_helper.py --device /dev/ttyUSB0 --command "help"
+# From project root (recommended)
+uv run python .claude/skills/picocom/serial_helper.py --device /dev/ttyUSB0 --command "help"
+```
+
+Alternatively, activate the virtual environment:
+```bash
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+python .claude/skills/picocom/serial_helper.py --device /dev/ttyUSB0 --command "help"
+```
+
+**Single Command (from project root):**
+```bash
+python .claude/skills/picocom/serial_helper.py --device /dev/ttyUSB0 --command "help"
 ```
 
 **With Custom Prompt (recommended for known devices):**
 ```bash
-python3 .claude/skills/picocom/serial_helper.py --device /dev/ttyUSB0 --prompt "User@[^>]+>" --command "ifconfig"
+# Using uv (recommended)
+uv run python .claude/skills/picocom/serial_helper.py --device /dev/ttyUSB0 --prompt "User@[^>]+>" --command "ifconfig"
+
+# Or with activated venv: source .venv/bin/activate
+# Or with system Python if dependencies are installed: python3 .claude/skills/picocom/serial_helper.py ...
 ```
 
 **Interactive Mode:**
 ```bash
-python3 .claude/skills/picocom/serial_helper.py --device /dev/ttyUSB0 --interactive
+# Using uv (recommended)
+uv run python .claude/skills/picocom/serial_helper.py --device /dev/ttyUSB0 --interactive
+
+# Or with activated venv: source .venv/bin/activate
+# Or with system Python if dependencies are installed: python3 .claude/skills/picocom/serial_helper.py ...
 ```
 
 **Batch Commands from File:**
 ```bash
 # Create a file with commands (one per line)
 echo -e "help\ndate\nifconfig\nps" > commands.txt
-python3 .claude/skills/picocom/serial_helper.py --device /dev/ttyUSB0 --script commands.txt
+
+# Using uv (recommended)
+uv run python .claude/skills/picocom/serial_helper.py --device /dev/ttyUSB0 --script commands.txt
+
+# Or with activated venv: source .venv/bin/activate
+# Or with system Python if dependencies are installed: python3 .claude/skills/picocom/serial_helper.py ...
 ```
 
 **JSON Output (for parsing):**
 ```bash
-python3 .claude/skills/picocom/serial_helper.py --device /dev/ttyUSB0 --command "help" --json
+# Using uv (recommended)
+uv run python .claude/skills/picocom/serial_helper.py --device /dev/ttyUSB0 --command "help" --json
+
+# Or with activated venv: source .venv/bin/activate
+# Or with system Python if dependencies are installed: python3 .claude/skills/picocom/serial_helper.py ...
 ```
 
 **Debug Mode:**
 ```bash
-python3 .claude/skills/picocom/serial_helper.py --device /dev/ttyUSB0 --command "help" --debug
+# Using uv (recommended)
+uv run python .claude/skills/picocom/serial_helper.py --device /dev/ttyUSB0 --command "help" --debug
+
+# Or with activated venv: source .venv/bin/activate
+# Or with system Python if dependencies are installed: python3 .claude/skills/picocom/serial_helper.py ...
 ```
 
 **Session Logging (for observation):**
 ```bash
-# Terminal 1 - Run with logging
-python3 .claude/skills/picocom/serial_helper.py \
+# Terminal 1 - Run with logging (using uv recommended)
+uv run python .claude/skills/picocom/serial_helper.py \
   --device /dev/ttyUSB0 \
   --prompt "User@[^>]+>" \
   --logfile /tmp/session.log \
@@ -85,6 +121,9 @@ python3 .claude/skills/picocom/serial_helper.py \
 
 # Terminal 2 - Watch the session in real-time
 tail -f /tmp/session.log
+
+# Or with activated venv: source .venv/bin/activate
+# Or with system Python if dependencies are installed: python3 .claude/skills/picocom/serial_helper.py ...
 ```
 
 **Note:** See `OBSERVING_SESSIONS.md` for comprehensive guide on monitoring serial sessions.
@@ -101,29 +140,34 @@ tail -f /tmp/session.log
 
 **Basic passive monitoring:**
 ```bash
-python3 .claude/skills/picocom/serial_helper.py \
+# Using uv (recommended)
+uv run python .claude/skills/picocom/serial_helper.py \
   --device /dev/ttyUSB0 \
   --monitor \
   --duration 30 \
   --logfile /tmp/uart.log
+
+# Or with activated venv: source .venv/bin/activate && python .claude/skills/picocom/serial_helper.py ...
 ```
 
 **Monitor with external trigger script:**
 ```bash
-# Run external script after 5 seconds and capture triggered UART output
-python3 .claude/skills/picocom/serial_helper.py \
+# Run external script after 5 seconds and capture triggered UART output (using uv)
+uv run python .claude/skills/picocom/serial_helper.py \
   --device /dev/ttyUSB0 \
   --monitor \
   --duration 60 \
   --trigger-script "python3 /path/to/test_script.py" \
   --trigger-delay 5 \
   --logfile /tmp/triggered_uart.log
+
+# Or with activated venv: source .venv/bin/activate && python .claude/skills/picocom/serial_helper.py ...
 ```
 
 **Monitor with baseline capture:**
 ```bash
-# Capture 10s baseline, run trigger at 15s, continue for total 60s
-python3 .claude/skills/picocom/serial_helper.py \
+# Capture 10s baseline, run trigger at 15s, continue for total 60s (using uv)
+uv run python .claude/skills/picocom/serial_helper.py \
   --device /dev/ttyUSB0 \
   --monitor \
   --duration 60 \
@@ -131,6 +175,8 @@ python3 .claude/skills/picocom/serial_helper.py \
   --trigger-delay 15 \
   --baseline-duration 10 \
   --logfile /tmp/reboot_monitor.log
+
+# Or with activated venv: source .venv/bin/activate && python .claude/skills/picocom/serial_helper.py ...
 ```
 
 **Monitor mode options:**
@@ -199,8 +245,8 @@ The helper script includes common prompt patterns, but you can specify custom on
 Here's a complete example of safely enumerating a device:
 
 ```bash
-# Set variables for convenience
-HELPER="python3 .claude/skills/picocom/serial_helper.py"
+# Set variables for convenience (using uv)
+HELPER="uv run python .claude/skills/picocom/serial_helper.py"
 DEVICE="/dev/ttyUSB0"
 PROMPT="User@[^>]+>"  # Adjust for your device
 LOGFILE="/tmp/serial_session.log"
@@ -226,6 +272,9 @@ $HELPER --device $DEVICE --prompt "$PROMPT" --logfile "$LOGFILE" --command "ls /
 # Device identifiers
 $HELPER --device $DEVICE --prompt "$PROMPT" --logfile "$LOGFILE" --command "getudid"
 $HELPER --device $DEVICE --prompt "$PROMPT" --logfile "$LOGFILE" --command "catmwarestate"
+
+# Note: If using activated venv, set HELPER="python .claude/skills/picocom/serial_helper.py"
+# If using system Python with deps installed, set HELPER="python3 .claude/skills/picocom/serial_helper.py"
 ```
 
 **IMPORTANT FOR CLAUDE CODE**: When using this skill, ALWAYS include `--logfile /tmp/serial_session.log` in every command so the user can monitor activity with `tail -f /tmp/serial_session.log`.
@@ -236,8 +285,8 @@ A common IoT pentesting scenario: testing if network requests, API calls, or har
 
 **Example: Testing if API requests generate UART logs**
 ```bash
-# Monitor UART while sending network request
-python3 .claude/skills/picocom/serial_helper.py \
+# Monitor UART while sending network request (using uv)
+uv run python .claude/skills/picocom/serial_helper.py \
   --device /dev/ttyUSB0 \
   --monitor \
   --duration 30 \
@@ -247,12 +296,15 @@ python3 .claude/skills/picocom/serial_helper.py \
 
 # Review what the device logged when API was called
 cat /tmp/api_test.log
+
+# Or with activated venv: source .venv/bin/activate && python .claude/skills/picocom/serial_helper.py ...
+# Or with system Python: python3 .claude/skills/picocom/serial_helper.py ...
 ```
 
 **Example: Testing authentication attempts**
 ```bash
-# Monitor UART during login attempts
-python3 .claude/skills/picocom/serial_helper.py \
+# Monitor UART during login attempts (using uv)
+uv run python .claude/skills/picocom/serial_helper.py \
   --device /dev/ttyUSB0 \
   --monitor \
   --duration 45 \
@@ -261,18 +313,24 @@ python3 .claude/skills/picocom/serial_helper.py \
   --baseline-duration 5 \
   --logfile /tmp/auth_test.log \
   --json > /tmp/auth_results.json
+
+# Or with activated venv: source .venv/bin/activate && python .claude/skills/picocom/serial_helper.py ...
+# Or with system Python: python3 .claude/skills/picocom/serial_helper.py ...
 ```
 
 **Example: Boot sequence analysis**
 ```bash
-# Capture device boot logs (reboot via network API)
-python3 .claude/skills/picocom/serial_helper.py \
+# Capture device boot logs (reboot via network API, using uv)
+uv run python .claude/skills/picocom/serial_helper.py \
   --device /dev/ttyUSB0 \
   --monitor \
   --duration 120 \
   --trigger-script "curl http://192.168.1.100/api/reboot" \
   --trigger-delay 5 \
   --logfile /tmp/boot_sequence.log
+
+# Or with activated venv: source .venv/bin/activate && python .claude/skills/picocom/serial_helper.py ...
+# Or with system Python: python3 .claude/skills/picocom/serial_helper.py ...
 ```
 
 **Why this is useful for pentesting:**
