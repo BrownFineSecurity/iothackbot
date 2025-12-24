@@ -1,5 +1,5 @@
 ---
-name: IoT Telnet Shell (telnetshell)
+name: telnetshell
 description: Use telnet to interact with IoT device shells for pentesting operations including device enumeration, vulnerability discovery, credential testing, and post-exploitation. Use when the user needs to interact with network-accessible shells, IoT devices, or telnet services.
 ---
 

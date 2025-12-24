@@ -1,5 +1,5 @@
 ---
-name: Ffind
+name: ffind
 description: Advanced file finder with type detection and filesystem extraction for analyzing firmware and extracting embedded filesystems. Use when you need to analyze firmware files, identify file types, or extract ext2/3/4 or F2FS filesystems.
 ---
 

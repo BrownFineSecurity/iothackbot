@@ -12,7 +12,7 @@ IoTHackBot is a collection of specialized tools and Claude Code skills designed 
 
 - **wsdiscovery** - WS-Discovery protocol scanner for discovering ONVIF cameras and IoT devices
 - **iotnet** - IoT network traffic analyzer for detecting protocols and vulnerabilities
-- **nmap-scan** (skill) - Professional network reconnaissance with two-phase scanning strategy
+- **nmap** (skill) - Professional network reconnaissance with two-phase scanning strategy
 
 ### Device-Specific Testing
 
@@ -22,10 +22,27 @@ IoTHackBot is a collection of specialized tools and Claude Code skills designed 
 
 ### Firmware & File Analysis
 
+- **chipsec** (skill) - UEFI/BIOS firmware static analysis
+  - Detect known rootkits (LoJax, ThinkPwn, HackingTeam)
+  - Generate EFI executable inventories with hashes
+  - Decode firmware structure and extract NVRAM
+
 - **ffind** - Advanced file finder with type detection and filesystem extraction
   - Identifies artifact file types
   - Extracts ext2/3/4 and F2FS filesystems
   - Designed for firmware analysis
+
+### Android Analysis
+
+- **apktool** (skill) - APK unpacking and resource extraction
+  - Decode AndroidManifest.xml
+  - Extract resources, layouts, strings
+  - Disassemble to smali code
+
+- **jadx** (skill) - APK decompilation
+  - Convert DEX to readable Java source
+  - Search for hardcoded credentials
+  - Analyze app logic
 
 ### Hardware & Console Access
 
@@ -106,19 +123,58 @@ ffind firmware.bin
 sudo ffind firmware.bin -e
 ```
 
-### Claude Code Skills
+### Claude Code Plugin
 
-IoTHackBot includes specialized skills for Claude Code that provide guided, interactive security testing:
+IoTHackBot is available as a Claude Code plugin, providing AI-assisted security testing with specialized skills.
 
-- **ffind** - Firmware file analysis with extraction
-- **iotnet** - Network traffic analysis
-- **nmap-scan** - Professional network reconnaissance
-- **onvifscan** - ONVIF device security testing
-- **picocom** - UART console interaction
-- **telnetshell** - Telnet shell enumeration
-- **wsdiscovery** - WS-Discovery device discovery
+#### Available Skills
 
-To use these skills with Claude Code, they are automatically available in the `.claude/skills/` directory.
+| Skill | Description |
+|-------|-------------|
+| **chipsec** | UEFI/BIOS firmware static analysis - malware detection, EFI inventory |
+| **apktool** | Android APK unpacking and resource extraction |
+| **jadx** | Android APK decompilation to Java source |
+| **ffind** | Firmware file analysis with filesystem extraction |
+| **iotnet** | IoT network traffic analysis |
+| **nmap** | Professional network reconnaissance |
+| **onvifscan** | ONVIF device security testing |
+| **picocom** | UART console interaction |
+| **telnetshell** | Telnet shell enumeration |
+| **wsdiscovery** | WS-Discovery device discovery |
+
+#### Plugin Installation
+
+**Option 1: Use directly during development**
+
+```bash
+claude --plugin-dir /path/to/iothackbot
+```
+
+**Option 2: Install as local marketplace (persistent)**
+
+Add to `~/.claude/settings.json`:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "iothackbot-local": {
+      "source": {
+        "source": "directory",
+        "path": "/path/to/iothackbot"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "iothackbot": true
+  }
+}
+```
+
+Then restart Claude Code for the settings to take effect.
+
+**Option 3: Project-specific setup**
+
+For use within a specific project, the skills are also available via the `.claude/skills/` symlink for backwards compatibility.
 
 ## Tool Architecture
 

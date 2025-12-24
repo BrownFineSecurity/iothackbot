@@ -1,5 +1,5 @@
 ---
-name: IoTNet
+name: iotnet
 description: IoT network traffic analyzer for detecting IoT protocols and identifying security vulnerabilities in network communications. Use when you need to analyze network traffic, identify IoT protocols, or assess network security of IoT devices.
 ---
 

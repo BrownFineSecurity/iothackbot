@@ -1,5 +1,5 @@
 ---
-name: Jadx
+name: jadx
 description: Android APK decompiler that converts DEX bytecode to readable Java source code. Use when you need to decompile APK files, analyze app logic, search for vulnerabilities, find hardcoded credentials, or understand app behavior through readable source code.
 ---
 

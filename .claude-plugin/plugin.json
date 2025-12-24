@@ -1,0 +1,23 @@
+{
+  "name": "iothackbot",
+  "version": "1.0.0",
+  "description": "IoT security testing toolkit with skills for firmware analysis, network reconnaissance, UEFI security, and device exploitation",
+  "author": {
+    "name": "BrownFineSecurity"
+  },
+  "homepage": "https://github.com/BrownFineSecurity/iothackbot",
+  "repository": "https://github.com/BrownFineSecurity/iothackbot",
+  "license": "MIT",
+  "keywords": [
+    "iot",
+    "security",
+    "firmware",
+    "uefi",
+    "chipsec",
+    "nmap",
+    "onvif",
+    "pentest",
+    "hacking"
+  ],
+  "skills": "./skills/"
+}

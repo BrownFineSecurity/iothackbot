@@ -1,5 +1,5 @@
 ---
-name: Wsdiscovery
+name: wsdiscovery
 description: WS-Discovery protocol scanner for discovering and enumerating ONVIF cameras and IoT devices on the network. Use when you need to discover ONVIF devices, cameras, or WS-Discovery enabled equipment on a network.
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: Apktool
+name: apktool
 description: Android APK unpacking and resource extraction tool for reverse engineering. Use when you need to decode APK files, extract resources, examine AndroidManifest.xml, analyze smali code, or repackage modified APKs.
 ---
 

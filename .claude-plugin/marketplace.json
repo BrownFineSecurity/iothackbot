@@ -1,0 +1,15 @@
+{
+  "name": "iothackbot-marketplace",
+  "description": "IoT security testing and hacking tools for Claude Code",
+  "owner": {
+    "name": "BrownFineSecurity"
+  },
+  "plugins": [
+    {
+      "name": "iothackbot",
+      "source": "./",
+      "description": "IoT security testing toolkit with skills for firmware analysis, network reconnaissance, UEFI security, and device exploitation",
+      "version": "1.0.0"
+    }
+  ]
+}

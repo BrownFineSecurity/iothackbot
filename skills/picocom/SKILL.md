@@ -1,5 +1,5 @@
 ---
-name: IoT UART Console (picocom)
+name: picocom
 description: Use picocom to interact with IoT device UART consoles for pentesting operations including device enumeration, vulnerability discovery, bootloader manipulation, and gaining root shells. Use when the user needs to interact with embedded devices, IoT hardware, or serial consoles.
 ---
 

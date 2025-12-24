@@ -1,5 +1,5 @@
 ---
-name: Onvifscan
+name: onvifscan
 description: ONVIF device security scanner for testing authentication and brute-forcing credentials. Use when you need to assess security of IP cameras or ONVIF-enabled devices.
 ---
 
