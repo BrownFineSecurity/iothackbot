@@ -9,7 +9,11 @@ This skill enables analysis of captured signals from Saleae Logic MSO devices us
 
 ## Prerequisites
 
-- `saleae-mso-api` Python package (`pip install saleae-mso-api`)
+- `saleae-mso-api` Python package — **Do NOT blindly pip install.** First check if it's already installed:
+  ```bash
+  python3 -c "from saleae.mso_api.binary_files import read_file; print('saleae-mso-api is available')"
+  ```
+  Only if that fails, install it: `pip install saleae-mso-api`
 - Binary export files from Saleae Logic software (`.bin` format)
 
 ## Quick Reference
@@ -222,6 +226,11 @@ print("Decoded:", bytes(decoded_bytes))
 ## Troubleshooting
 
 ### "No module named 'saleae.mso_api'"
+First verify it's truly missing:
+```bash
+python3 -c "from saleae.mso_api.binary_files import read_file"
+```
+Only if the import fails, install it:
 ```bash
 pip install saleae-mso-api
 ```
