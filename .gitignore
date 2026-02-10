@@ -194,4 +194,4 @@ $RECYCLE.BIN/
 .Trash-*
 
 # Claude local permissions
-.claude\settings.local.json
+.claude/settings.local.json
