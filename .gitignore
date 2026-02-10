@@ -192,3 +192,6 @@ $RECYCLE.BIN/
 # Linux
 .directory
 .Trash-*
+
+# Claude local permissions
+.claude/settings.local.json
