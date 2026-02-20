@@ -59,6 +59,28 @@ IoTHackBot is a collection of specialized tools and Claude Code skills designed 
   - BusyBox command handling
   - Includes Python helper script and pre-built enumeration scripts
 
+### Logic Analyzer & Signal Analysis
+
+- **sigrok** (skill) - Analyze logic analyzer captures using sigrok-cli and 131+ protocol decoders
+  - Native .sr file parsing (no sigrok-cli needed for timing analysis)
+  - Supports .sr, .csv, and .vcd formats
+  - Decode UART, SPI, I2C, CAN, JTAG, USB, 1-Wire, and many more
+  - Timing analysis with histograms, cluster detection, and protocol guessing
+  - Binary data extraction from decoded protocols
+
+- **logicmso** (skill) - Analyze captures from Saleae Logic MSO devices
+  - Decode protocols (UART, SPI, I2C) from exported binary files
+  - Digital and analog capture analysis
+  - Hardware reverse engineering and CTF challenges
+
+- **urh** (skill) - RF signal analysis and protocol decoding using Universal Radio Hacker
+  - Supports OOK, ASK, FSK, and PSK modulations
+  - Loads .complex/.cfile (float32), .complex16s, .complex16u, and .wav IQ formats
+  - Native IQ loading with numpy — spectrum, energy, and OOK demodulation without URH installed
+  - Protocol decoding via urh_cli with automatic modulation detection
+  - Covers 433MHz/315MHz remotes, Z-Wave, Zigbee, and arbitrary RF protocols
+  - Recording via URH GUI with any compatible SDR (RTL-SDR, HackRF, USRP, etc.)
+
 ## Installation
 
 ### Prerequisites
@@ -124,6 +146,33 @@ netflows capture.pcap --source-ip 192.168.1.100
 netflows capture.pcap -s 192.168.1.100 --format quiet
 ```
 
+#### Analyze Logic Analyzer Captures
+```bash
+# Timing analysis of a sigrok capture (no sigrok-cli needed)
+python3 skills/sigrok/analyze_capture.py capture.sr --histogram --clusters
+
+# Decode UART protocol (requires sigrok-cli)
+python3 skills/sigrok/analyze_capture.py capture.sr --decode uart:baudrate=115200
+
+# Analyze a specific channel
+python3 skills/sigrok/analyze_capture.py capture.sr --channel D2 --raw
+```
+
+#### Analyze RF Signals
+```bash
+# Signal overview and modulation hint
+python3 skills/urh/analyze_signal.py signal.complex -s 2000000
+
+# Inspect power spectrum
+python3 skills/urh/analyze_signal.py signal.complex -s 2000000 --spectrum
+
+# Demodulate OOK and show pulse timing clusters (e.g. 433MHz remote)
+python3 skills/urh/analyze_signal.py signal.complex -s 2000000 --demodulate ook --clusters
+
+# Full protocol decoding via urh_cli
+python3 skills/urh/analyze_signal.py signal.complex -s 2000000 --decode --modulation OOK
+```
+
 #### Analyze Firmware
 ```bash
 # Identify file types
@@ -149,7 +198,10 @@ IoTHackBot is available as a Claude Code plugin, providing AI-assisted security 
 | **netflows** | Network flow extraction with DNS hostname resolution |
 | **nmap** | Professional network reconnaissance |
 | **onvifscan** | ONVIF device security testing |
+| **logicmso** | Saleae Logic MSO capture analysis and protocol decoding |
 | **picocom** | UART console interaction |
+| **sigrok** | Logic analyzer capture analysis with 131+ protocol decoders |
+| **urh** | RF signal analysis — OOK/FSK/ASK/PSK demodulation and protocol decoding |
 | **telnetshell** | Telnet shell enumeration |
 | **wsdiscovery** | WS-Discovery device discovery |
 
