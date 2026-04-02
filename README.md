@@ -134,6 +134,7 @@ sudo ffind firmware.bin -e
 ```
 
 ### Claude Code Plugin
+- [skill-taxonomy](https://github.com/SeeleAI/skill-taxonomy) - Structured taxonomy for AI agent skills: discovery, classification and routing across multi-agent workflows.
 
 IoTHackBot is available as a Claude Code plugin, providing AI-assisted security testing with specialized skills.
 
