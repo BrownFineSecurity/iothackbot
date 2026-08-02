@@ -65,6 +65,7 @@ IoTHackBot is a collection of specialized tools and Claude Code skills designed 
   - Device enumeration
   - BusyBox command handling
   - Includes Python helper script and pre-built enumeration scripts
+- [Pixel Pet](https://letmethink.cc/app/pixel-pet/) - Turn a personality description into a deterministic ASCII pixel companion in the browser.
 
 ## Installation
 
